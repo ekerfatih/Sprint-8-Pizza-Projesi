@@ -23,15 +23,43 @@ const initialErrors = {
 
 function App() {
 
+    function increment() {
+        setFormData(prev => {
+            const newQuantity = prev.quantity + 1;
+            return {...prev, quantity: newQuantity};
+        });
+    }
+
+    function decrement() {
+        setFormData(prev => {
+            if (prev.quantity <= 1) {
+                const confirmCancel = window.confirm("Siparişinizi iptal etmek ister misiniz?");
+                if (confirmCancel) {
+                    setFormData(initialFormData);
+                    setPage("home");
+                    return prev; // veya initialFormData, yukarıda zaten çağrılıyor
+                } else {
+                    return prev;
+                }
+            }
+            return {...prev, quantity: prev.quantity - 1};
+        });
+    }
+
+
     const [page, setPage] = useState("home")
     const [formData, setFormData] = useState(initialFormData);
     const [errors, setErrors] = useState(initialErrors);
     const [sendActive, setSendActive] = useState(false);
 
 
+    const [isLoading, setIsLoading] = useState(false);
+
+
     useEffect(() => {
-        errors.sizeEmpty = !formData.pizzaSize;
-        errors.doughEmpty = !formData.dough;
+        setErrors(prev => {
+            return {...prev, sizeEmpty: !formData.pizzaSize, doughEmpty: !formData.pizzaSize};
+        });
         setSendActive(checkSendable());
     }, [formData.pizzaSize, formData.dough]);
 
@@ -45,11 +73,18 @@ function App() {
 
     function onChange(e) {
         const {type, name, value, checked} = e.target;
-
         setFormData(prev => {
             if (name === "ingredients") {
-                const updated = checked ? [...prev.ingredients, value] : prev.ingredients.filter(item => item !== value);
-                return {...prev, ingredients: updated};
+                if (checked) {
+                    if (prev.ingredients.length < 10) {
+                        return {...prev, ingredients: [...prev.ingredients, value]};
+                    } else {
+                        return prev;
+                    }
+                } else {
+                    const updated = prev.ingredients.filter(item => item !== value);
+                    return {...prev, ingredients: updated};
+                }
             }
 
             if (name === "quantity") {
@@ -60,13 +95,15 @@ function App() {
                     if (confirmCancel) {
                         setFormData(initialFormData);
                         setPage("home");
+                        return prev;
                     } else {
-
-                        setFormData(prev => ({...prev, [name]: num}));
-                        return;
+                        return {...prev, quantity: 1};
                     }
                 }
+
+                return {...prev, quantity: num};
             }
+
 
             const val = type === "checkbox" ? checked : value;
             return {...prev, [name]: val};
@@ -95,7 +132,8 @@ function App() {
                     <Footer/>
                 </>
             case "form":
-                return <OrderForm onChange={onChange} formData={formData} homePage={homePage} sendActive={sendActive}/>
+                return <OrderForm onChange={onChange} formData={formData} homePage={homePage} sendActive={sendActive}
+                                  increment={increment} decrement={decrement}/>
             default:
                 return 0;
         }
@@ -106,6 +144,7 @@ function App() {
     return (
         <>
             {PageSwap()}
+            {console.log(formData)}
             <button onClick={() => Ttt()}>Form</button>
         </>
     )

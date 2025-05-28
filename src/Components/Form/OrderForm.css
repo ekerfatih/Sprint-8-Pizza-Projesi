@@ -1,7 +1,7 @@
-﻿*{
+﻿* {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+
 }
 
 .header {
@@ -25,7 +25,7 @@
 }
 
 .grayContent {
-    width: 25%;
+    width: 27%;
     display: flex;
     flex-direction: column;
 }
@@ -69,7 +69,7 @@ Bej: #FAF7F2
 }
 
 .form-container {
-    width: 25%;
+    width: 27%;
 }
 
 .form-content {
@@ -87,55 +87,136 @@ Bej: #FAF7F2
 }
 
 .pizza-size {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
+    display: flex;
+    margin: 50px 0;
+}
+
+.sizeContainer {
+    display: flex;
+    margin: 20px 0;
+    gap: 20px;
 }
 
 .size {
-    grid-area: 1 / 1 / 5 / 2;
+    width: 50%;
 }
+
+.radioDiv label {
+    width: 50px;
+    height: 50px;
+    background-color: #FAF7F2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+
+.radioDiv label:hover {
+    background-color: #fcfaf7;
+}
+
+.radioDiv input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.radioDiv input[type="radio"]:checked + label {
+    background-color: #fdeccb;
+}
+
 
 .hamurSecim {
-    grid-area: 1 / 2 / 5 / 5;
+    width: 50%;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
+#ekMalzemeler {
+    margin: 20px 0;
+}
+
+.hamurSecim select {
+    width: 100%;
+    margin: 30px 0;
+    padding: 15px;
+    /*background-color: #FAF7F2;*/
+    background: #FAF7F2 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25L12 15.75 4.5 8.25'/></svg>") no-repeat right 0.75rem center;
+    border: none;
+    background-size: 0.8rem;
+    border-radius: 5px;
+}
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 0.5rem 10rem 0.5rem 1rem;
+    background: white url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 0.75rem center;
+    background-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.red{
+    color: red;
+}
 .checkboxes {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     align-items: center;
     padding: 30px 0;
+    gap: 10px;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    width: 32%;
+    font-size: 0.9rem;
+    gap: 10px;
 }
 
 .checkLabel {
-    display: block;
-    background-color: red;
+    background-color: #FAF7F2;
     width: 40px;
     height: 40px;
+    justify-content: center;
+    border: none;
+    align-items: center;
+    display: flex;
+    border-radius: 10px;
 }
 
-#Kabak:checked ~ .checkLabel {
-    background-color: chartreuse;
+input[type="checkbox"]:checked + .checkLabel {
+    background-color: #FDC913;
 }
 
-#Kabak:checked ~ .checkLabel::after {
-    background-color: chartreuse;
+input[type="checkbox"]:checked + .checkLabel::after {
+    font-family: 'Barlow';
+    content: "✔";
+    font-weight: 200;
+    font-size: 1.1rem;
 }
-
 
 .order-note textarea {
     width: 100%;
     padding: 10px;
     align-content: center;
+    background-color: #FAF7F2;
+    border-radius: 15px;
+    border: none;
+    font-weight: 600;
+    resize: none;
+}
+
+.order-note h2 {
+    margin: 30px 0;
 }
 
 .form-container hr {
+    margin: 30px 0;
     width: 100%;
 }
 
@@ -143,12 +224,31 @@ Bej: #FAF7F2
     display: flex;
     justify-content: space-between;
     align-items: start;
+    margin-bottom: 100px;
 }
 
 .summary-price {
-    border: 1px solid black;
-    padding: 25px 50px 50px 50px;
-    position: relative;
+    width: 68%;
+    display: flex;
+    flex-direction: column;
+}
+
+.topSummary p {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 500;
+}
+
+.topSummary p:nth-child(2) {
+    color: red;
+}
+
+.topSummary {
+    line-height: 3rem;
+    border: 1px solid #d1d1d1;
+    padding: 30px 50px 30px 50px;
+    border-radius: 10px;
+    background-color: #FAF7F2;
 }
 
 .summary-price h2 {
@@ -157,9 +257,50 @@ Bej: #FAF7F2
 
 .summary-price button {
     width: 100%;
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    padding: 15px 20px;
+    background: #fbc813;
     border: none;
     height: 15%;
+    font-size: 1.1rem;
+    border-radius: 10px;
+}
+
+.numberInc {
+    display: flex;
+}
+
+.numberInc input {
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 1px solid gray;
+}
+
+.numberInc span {
+    width: 50px;
+    height: 50px;
+    background-color: #fdc913;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.6rem;
+    font-family: 'Calibri', sans-serif;
+    font-weight: 400;
+}
+
+.numberInc span:first-child {
+    border-radius: 10px 0 0 10px;
+}
+
+.numberInc span:nth-child(3) {
+    border-radius: 0 10px 10px 0;
+}
+
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
