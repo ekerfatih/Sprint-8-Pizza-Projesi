@@ -1,24 +1,71 @@
-﻿.header .image {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80%;
+﻿*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .header {
     background-color: #CE2829;
-    height: 20vh;
+    height: 15vh;
+    position: relative;
 }
 
-.header-text {
+.header img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -20%);
+}
+
+.grayArea {
+
+    background-color: #FAF7F2;
     display: flex;
+    justify-content: center;
+}
+
+.grayContent {
     width: 25%;
-    color: white;
+    display: flex;
+    flex-direction: column;
 }
 
 .ugh {
-    display: flex;
-    justify-content: center;
+
+}
+
+
+/*
+Sarı #FDC913
+Açık Gri: #5F5F5F
+Koyu Gri #292929
+Kırmızı #CE2829
+Bej: #FAF7F2
+*/
+
+.header-text a {
+    cursor: pointer;
+}
+
+.header-text strong {
+    color: red;
+}
+
+.pizza-text h2 {
+    margin: 40px 0;
+}
+
+.price {
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.pizza-text {
+    line-height: 1.5rem;
+}
+
+.pizza-text p {
+    margin: 40px 0;
 }
 
 .form-container {
@@ -51,7 +98,7 @@
     grid-area: 1 / 1 / 5 / 2;
 }
 
-.dough {
+.hamurSecim {
     grid-area: 1 / 2 / 5 / 5;
     display: flex;
     flex-direction: column;
@@ -61,11 +108,26 @@
 .checkboxes {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
 }
 
-.checkbox {
-    width: 33%;
+.checkLabel {
+    display: block;
+    background-color: red;
+    width: 40px;
+    height: 40px;
 }
+
+#Kabak:checked ~ .checkLabel {
+    background-color: chartreuse;
+}
+
+#Kabak:checked ~ .checkLabel::after {
+    background-color: chartreuse;
+}
+
 
 .order-note textarea {
     width: 100%;
@@ -85,5 +147,19 @@
 
 .summary-price {
     border: 1px solid black;
-    padding: 50px;
+    padding: 25px 50px 50px 50px;
+    position: relative;
+}
+
+.summary-price h2 {
+    margin: 0;
+}
+
+.summary-price button {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border: none;
+    height: 15%;
 }
