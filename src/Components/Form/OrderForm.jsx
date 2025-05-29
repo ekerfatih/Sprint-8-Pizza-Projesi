@@ -1,12 +1,18 @@
 ﻿import './OrderForm.css';
 import Check from "./Check.jsx";
-import Footer from "../Footer/Footer.jsx";
 
 const ingredientsList = ["Pepperoni", "Sosis", "Kanada Jambonu", "Tavuk Izgara", "Soğan", "Domates", "Mısır", "Sucuk", "Jalepeno", "Sarımsak", "Biber", "Karides", "Ananas", "Kabak"]
 
 
-function OrderForm({onChange, formData, homePage, sendActive, increment, decrement}) {
+function OrderForm({onChange, formData, errors, homePage, increment, decrement, onSubmit, isSubmitted, checkSendable}) {
     const {pizzaSize, ingredients, quantity} = formData;
+
+    const handleScroll = () => {
+        const section = document.querySelector('.form-container');
+        section?.scrollIntoView({behavior: 'smooth'});
+    };
+
+
     return (
         <section className="orderFormSection barlow">
             <div className="header">
@@ -42,91 +48,103 @@ function OrderForm({onChange, formData, homePage, sendActive, increment, decreme
                 </div>
             </div>
 
+            <form onSubmit={onSubmit}>
+                <div className="form-content">
 
-            <div className="form-content">
-                <div className="form-container">
+                    <div className="form-container">
 
-                    <div className="pizza-size">
-                        <div className="size">
-                            <h3>Boyut Seç<span className="red"> *</span></h3>
-                            <div className="sizeContainer">
-                                <div className="radioDiv">
-                                    <input checked={pizzaSize === "Küçük Boy"} onChange={onChange} value="Küçük Boy"
-                                           type="radio"
-                                           name="pizzaSize" id="small"/>
-                                    <label className="lblRadio" htmlFor="small">S</label>
+                        <div className="pizza-size">
+                            <div className="size">
+                                <h3>Boyut Seç<span className="red"> *</span></h3>
+                                <div className="sizeContainer">
+                                    <div className="radioDiv">
+                                        <input checked={pizzaSize === "Küçük Boy"} onChange={onChange} value="Küçük Boy"
+                                               type="radio"
+                                               name="pizzaSize" id="small"/>
+                                        <label className="lblRadio" htmlFor="small">S</label>
+                                    </div>
+                                    <div className="radioDiv">
+                                        <input checked={pizzaSize === "Orta Boy"} onChange={onChange} value="Orta Boy"
+                                               type="radio"
+                                               name="pizzaSize" id="mid"/>
+                                        <label htmlFor="mid">M</label>
+                                    </div>
+                                    <div className="radioDiv">
+                                        <input checked={pizzaSize === "Büyük Boy"} onChange={onChange} value="Büyük Boy"
+                                               type="radio"
+                                               name="pizzaSize" id="big"/>
+                                        <label htmlFor="big">L</label>
+                                    </div>
                                 </div>
-                                <div className="radioDiv">
-                                    <input checked={pizzaSize === "Orta Boy"} onChange={onChange} value="Orta Boy"
-                                           type="radio"
-                                           name="pizzaSize" id="mid"/>
-                                    <label htmlFor="mid">M</label>
-                                </div>
-                                <div className="radioDiv">
-                                    <input checked={pizzaSize === "Büyük Boy"} onChange={onChange} value="Büyük Boy"
-                                           type="radio"
-                                           name="pizzaSize" id="big"/>
-                                    <label htmlFor="big">L</label>
+                                {(errors.sizeEmpty && isSubmitted) &&
+                                    <p className="error">Lütfen Boyut Seçimi yapınız</p>}
+                            </div>
+                            <div className="hamurSecim">
+                                <div>
+                                    <h3>Hamur Seç<span className="red"> *</span></h3>
+                                    <select
+                                        onChange={onChange}
+                                        name="dough"
+                                        aria-label="Lütfen hamur seçiminizi yapın"
+                                        value={formData.dough}
+                                    >
+                                        <option value="" disabled>Hamur Kalınlığı</option>
+                                        <option value="İnce">İnce</option>
+                                        <option value="Normal">Normal</option>
+                                        <option value="kalın">Kalın</option>
+                                    </select>
+                                    {(errors.doughEmpty && isSubmitted) &&
+                                        <p className="error">Lütfen Kalınlık Seçimi yapınız</p>}
                                 </div>
                             </div>
-
                         </div>
-                        <div className="hamurSecim">
-                            <div>
-                                <h3>Hamur Seç<span className="red"> *</span></h3>
-                                <select
-                                    onChange={onChange}
-                                    name="dough"
-                                    aria-label="Lütfen hamur seçiminizi yapın"
-                                    defaultValue=""
-                                >
-                                    <option value="" disabled>Hamur Kalınlığı</option>
-                                    <option value="İnce">İnce</option>
-                                    <option value="Normal">Normal</option>
-                                    <option value="kalın">Kalın</option>
-                                </select>
 
-                            </div>
+                        <h3 id="ekMalzemeler">Ek Malzemeler</h3>
+                        <span>En fazla 10 malzeme seçebilirsiniz. 5₺</span>
+                        {(errors.ingredientsLessThanFour && isSubmitted) &&
+                            <p className="error">4 üründen fazla seçmelisiniz</p>}
+                        <div className="checkboxes">
+                            {ingredientsList.map((item, index) => {
+                                return <Check onChange={onChange} ingredients={ingredients} ingredient={item}
+                                              key={index}/>
+                            })}
                         </div>
-                    </div>
-                    <h3 id="ekMalzemeler">Ek Malzemeler</h3>
-                    <span>En fazla 10 malzeme seçebilirsiniz. 5₺</span>
-                    <div className="checkboxes">
-                        {ingredientsList.map((item, index) => {
-                            return <Check onChange={onChange} ingredients={ingredients} ingredient={item} key={index}/>
-                        })}
-                    </div>
 
-                    <div className="order-note">
-                        <h2>Sipariş Notu</h2>
-                        <textarea onChange={onChange} name="orderNote" id="orderNote" rows="3"
-                                  placeholder={"Siparişine eklemek istediğin bir not var mı?"}>
+                        <div className="order-note">
+                            <h2>Sipariş Notu</h2>
+                            <textarea onChange={onChange} name="orderNote" id="orderNote" rows="3"
+                                      value={formData.orderNote}
+                                      placeholder={"Siparişine eklemek istediğin bir not var mı?"}>
 
                         </textarea>
-                    </div>
-                    <hr/>
-                    <div className="summary">
-                        <div className="numberInc">
-                            <span onClick={decrement}>-</span>
-                            <input onChange={onChange} value={quantity} name="quantity" className="number"
-                                   type="number"/>
-                            <span onClick={increment}>+</span>
                         </div>
-                        <div className="summary-price">
+                        <hr/>
+                        <div className="summary">
+                            <div className="numberInc">
+                                <span onClick={decrement}>-</span>
+                                <input onChange={onChange} value={quantity} name="quantity" className="number"
+                                       type="number"/>
+                                <span onClick={increment}>+</span>
+                            </div>
+
                             <div className="topSummary">
                                 <h3>Sipariş Toplamı</h3>
                                 <div>
-                                    <p>Seçimler<span> 25.00₺</span></p>
-                                    <p>Toplam <span>110.00₺</span></p>
+                                    <p>Seçimler<span> {ingredients.length * 5}₺</span></p>
+                                    <p>Toplam <span>{formData.quantity * 85.50 + ingredients.length * 5}₺</span></p>
+
                                 </div>
                             </div>
-                            <button disabled={!sendActive}>Sipariş ver</button>
+
+                            <button onClick={() => {
+                                !checkSendable && handleScroll();
+                            }} className="order-button">Sipariş ver
+                            </button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
 
-            <Footer/>
         </section>
     )
 }

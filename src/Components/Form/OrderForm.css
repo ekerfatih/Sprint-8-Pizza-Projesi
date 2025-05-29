@@ -1,4 +1,5 @@
-﻿* {
+﻿
+* {
     margin: 0;
     padding: 0;
 
@@ -28,10 +29,6 @@
     width: 27%;
     display: flex;
     flex-direction: column;
-}
-
-.ugh {
-
 }
 
 
@@ -101,30 +98,6 @@ Bej: #FAF7F2
     width: 50%;
 }
 
-.radioDiv label {
-    width: 50px;
-    height: 50px;
-    background-color: #FAF7F2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-}
-
-
-.radioDiv label:hover {
-    background-color: #fcfaf7;
-}
-
-.radioDiv input[type="radio"] {
-    appearance: none;
-    -webkit-appearance: none;
-}
-
-.radioDiv input[type="radio"]:checked + label {
-    background-color: #fdeccb;
-}
-
 
 .hamurSecim {
     width: 50%;
@@ -136,32 +109,11 @@ Bej: #FAF7F2
     margin: 20px 0;
 }
 
-.hamurSecim select {
-    width: 100%;
-    margin: 30px 0;
-    padding: 15px;
-    /*background-color: #FAF7F2;*/
-    background: #FAF7F2 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25L12 15.75 4.5 8.25'/></svg>") no-repeat right 0.75rem center;
-    border: none;
-    background-size: 0.8rem;
-    border-radius: 5px;
-}
 
-select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    padding: 0.5rem 10rem 0.5rem 1rem;
-    background: white url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 0.75rem center;
-    background-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.red{
+.red {
     color: red;
 }
+
 .checkboxes {
     display: flex;
     flex-wrap: wrap;
@@ -178,38 +130,6 @@ select {
     gap: 10px;
 }
 
-.checkLabel {
-    background-color: #FAF7F2;
-    width: 40px;
-    height: 40px;
-    justify-content: center;
-    border: none;
-    align-items: center;
-    display: flex;
-    border-radius: 10px;
-}
-
-input[type="checkbox"]:checked + .checkLabel {
-    background-color: #FDC913;
-}
-
-input[type="checkbox"]:checked + .checkLabel::after {
-    font-family: 'Barlow';
-    content: "✔";
-    font-weight: 200;
-    font-size: 1.1rem;
-}
-
-.order-note textarea {
-    width: 100%;
-    padding: 10px;
-    align-content: center;
-    background-color: #FAF7F2;
-    border-radius: 15px;
-    border: none;
-    font-weight: 600;
-    resize: none;
-}
 
 .order-note h2 {
     margin: 30px 0;
@@ -220,18 +140,6 @@ input[type="checkbox"]:checked + .checkLabel::after {
     width: 100%;
 }
 
-.summary {
-    display: flex;
-    justify-content: space-between;
-    align-items: start;
-    margin-bottom: 100px;
-}
-
-.summary-price {
-    width: 68%;
-    display: flex;
-    flex-direction: column;
-}
 
 .topSummary p {
     display: flex;
@@ -251,19 +159,10 @@ input[type="checkbox"]:checked + .checkLabel::after {
     background-color: #FAF7F2;
 }
 
-.summary-price h2 {
+.topSummary h2 {
     margin: 0;
 }
 
-.summary-price button {
-    width: 100%;
-    padding: 15px 20px;
-    background: #fbc813;
-    border: none;
-    height: 15%;
-    font-size: 1.1rem;
-    border-radius: 10px;
-}
 
 .numberInc {
     display: flex;
@@ -298,9 +197,254 @@ input[type="checkbox"]:checked + .checkLabel::after {
     border-radius: 0 10px 10px 0;
 }
 
+.error {
+    color: red;
+}
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+
+.summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    column-gap: 20px;
+    margin-bottom: 50px;
+}
+
+.topSummary {
+    grid-area: 1 / 2 / 5 / 6;
+}
+
+.numberInc {
+    grid-area: 1 / 1 / 2 / 2;
+}
+
+.order-button {
+    grid-area: 5 / 2 / 6 / 6;
+    width: 100%;
+    padding: 15px 20px;
+    background: #fbc813;
+    border: none;
+    font-size: 1.1rem;
+    border-radius: 10px;
+}
+
+
+@media (max-width: 420px) {
+    .image {
+        display: none;
+    }
+
+    .ugh {
+        background-color: red;
+        width: 100%;
+        color: white;
+    }
+
+    .ugh strong {
+        color: white;
+    }
+
+    .grayArea {
+        width: 100%;
+        background-color: white;
+    }
+
+    .grayContent {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .header img {
+        width: 80%;
+    }
+
+    .header {
+        width: 100%;
+    }
+
+    .orderFormSection {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pizza-text {
+        text-align: left;
+        width: 80%;
+    }
+
+    .checkboxes {
+        display: flex;
+        justify-content: center;
+    }
+
+    .form-container {
+        width: 100%;
+    }
+
+    .sizeContainer {
+        display: flex;
+        flex-direction: column;
+    }
+
+
+    select {
+        margin: 1rem 0;
+    }
+
+    .checkboxInput {
+        display: block;
+    }
+
+    .checkbox {
+        width: 47%;
+    }
+
+
+    .order-note h2 {
+        margin: 10px 0;
+        font-size: 1.2rem;
+    }
+
+    .order-note textarea {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 10px;
+        margin: 0 auto;
+    }
+
+    form {
+        display: flex;
+        justify-content: center;
+    }
+
+    .form-content {
+
+        width: 80%;
+    }
+
+    .summary {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        row-gap: 20px;
+
+    }
+
+    .numberInc input {
+        height: 48px;
+    }
+
+    .topSummary {
+        background-color: white;
+        border-radius: 4px;
+        grid-area: 1 / 1 / 4 / 3;
+    }
+
+    .numberInc {
+        grid-area: 4 / 1 / 5 / 2;
+    }
+
+    .order-button {
+        grid-area: 4 / 2 / 5 / 3;
+    }
+
+
+}
+
+@media (min-width: 420px) {
+
+    .checkboxInput {
+        display: none;
+    }
+
+    .checkLabel {
+        background-color: #FAF7F2;
+        width: 40px;
+        height: 40px;
+        justify-content: center;
+        border: none;
+        align-items: center;
+        display: flex;
+        border-radius: 10px;
+    }
+
+    input[type="checkbox"]:checked + .checkLabel {
+        background-color: #FDC913;
+    }
+
+    input[type="checkbox"]:checked + .checkLabel::after {
+        font-family: 'Barlow';
+        content: "✔";
+        font-weight: 200;
+        font-size: 1.1rem;
+    }
+
+
+    .radioDiv label {
+        width: 50px;
+        height: 50px;
+        background-color: #FAF7F2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+    }
+
+
+    .radioDiv label:hover {
+        background-color: #fcfaf7;
+    }
+
+    .radioDiv input[type="radio"] {
+        appearance: none;
+        -webkit-appearance: none;
+    }
+
+    .radioDiv input[type="radio"]:checked + label {
+        background-color: #fdeccb;
+    }
+
+
+    .hamurSecim select {
+        width: 100%;
+        margin: 30px 0;
+        padding: 15px;
+        /*background-color: #FAF7F2;*/
+        background: #FAF7F2 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25L12 15.75 4.5 8.25'/></svg>") no-repeat right 0.75rem center;
+        border: none;
+        background-size: 0.8rem;
+        border-radius: 5px;
+    }
+
+    .order-note textarea {
+        width: 100%;
+        padding: 10px;
+        align-content: center;
+        background-color: #FAF7F2;
+        border-radius: 15px;
+        border: none;
+        font-weight: 600;
+        resize: none;
+    }
+
+    select {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        padding: 0.5rem 10rem 0.5rem 1rem;
+        background: white url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 0.75rem center;
+        background-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+    }
 }

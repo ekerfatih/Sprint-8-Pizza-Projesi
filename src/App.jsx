@@ -5,7 +5,8 @@ import Footer from "./Components/Footer/Footer.jsx";
 import {categories} from "./data/data.js";
 import {useEffect, useState} from "react";
 import OrderForm from "./Components/Form/OrderForm.jsx";
-import error from "eslint-plugin-react/lib/util/error.js";
+import Success from "./Components/Success/Success.jsx";
+import axios from "axios";
 
 
 const initialFormData = {
@@ -14,14 +15,24 @@ const initialFormData = {
     ingredients: [],
     orderNote: "",
     quantity: 1,
+    price: function () {
+        return this.quantity * 85.5 + this.ingredients.length * 5;
+    }
+
 }
 
 const initialErrors = {
     sizeEmpty: true,
     doughEmpty: true,
+    ingredientsLessThanFour: true,
 }
 
 function App() {
+
+    const handleScroll = () => {
+        const section = document.querySelector('body');
+        section?.scrollIntoView({behavior: 'smooth'});
+    };
 
     function increment() {
         setFormData(prev => {
@@ -37,7 +48,7 @@ function App() {
                 if (confirmCancel) {
                     setFormData(initialFormData);
                     setPage("home");
-                    return prev; // veya initialFormData, yukarıda zaten çağrılıyor
+                    return prev;
                 } else {
                     return prev;
                 }
@@ -47,10 +58,14 @@ function App() {
     }
 
 
-    const [page, setPage] = useState("home")
+    const [page, setPage] = useState("form")
     const [formData, setFormData] = useState(initialFormData);
     const [errors, setErrors] = useState(initialErrors);
-    const [sendActive, setSendActive] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false)
+
+    useEffect(() => {
+        console.log(isSubmitted);
+    }, [isSubmitted]);
 
 
     const [isLoading, setIsLoading] = useState(false);
@@ -58,23 +73,51 @@ function App() {
 
     useEffect(() => {
         setErrors(prev => {
-            return {...prev, sizeEmpty: !formData.pizzaSize, doughEmpty: !formData.pizzaSize};
+
+            const n = {
+                ...prev,
+                sizeEmpty: !formData.pizzaSize,
+                doughEmpty: !formData.dough,
+                ingredientsLessThanFour: formData.ingredients.length < 4
+            };
+            return n;
         });
-        setSendActive(checkSendable());
-    }, [formData.pizzaSize, formData.dough]);
+    }, [formData.pizzaSize, formData.dough, formData.ingredients]);
 
     const checkSendable = () => {
         return Object.values(errors).every(x => x === false)
     }
 
-    function Ttt() {
-        page === "form" ? setPage("home") : setPage("form")
+    function openForm() {
+        setIsSubmitted(false);
+        setPage("form");
     }
 
     function onChange(e) {
         const {type, name, value, checked} = e.target;
-        setFormData(prev => {
-            if (name === "ingredients") {
+
+        if (name === "quantity") {
+            const num = Number(value);
+
+            if (num < 1) {
+                const confirmCancel = window.confirm("Siparişinizi iptal etmek ister misiniz?");
+                if (confirmCancel) {
+                    setPage("home");
+                    setFormData(initialFormData);
+                    setErrors(initialErrors);
+                    return;
+                } else {
+                    setFormData(prev => ({...prev, quantity: 1}));
+                    return;
+                }
+            }
+
+            setFormData(prev => ({...prev, quantity: num}));
+            return;
+        }
+
+        if (name === "ingredients") {
+            setFormData(prev => {
                 if (checked) {
                     if (prev.ingredients.length < 10) {
                         return {...prev, ingredients: [...prev.ingredients, value]};
@@ -85,55 +128,81 @@ function App() {
                     const updated = prev.ingredients.filter(item => item !== value);
                     return {...prev, ingredients: updated};
                 }
-            }
+            });
+            return;
+        }
 
-            if (name === "quantity") {
-                const num = Number(value);
-
-                if (num < 1) {
-                    const confirmCancel = window.confirm("Siparişinizi iptal etmek ister misiniz?");
-                    if (confirmCancel) {
-                        setFormData(initialFormData);
-                        setPage("home");
-                        return prev;
-                    } else {
-                        return {...prev, quantity: 1};
-                    }
-                }
-
-                return {...prev, quantity: num};
-            }
-
-
-            const val = type === "checkbox" ? checked : value;
-            return {...prev, [name]: val};
-        });
+        const val = type === "checkbox" ? checked : value;
+        setFormData(prev => ({...prev, [name]: val}));
     }
+
 
     function handleSubmit(e) {
-        if (!checkSendable()) return;
-        console.log("x");
+        e.preventDefault();
+        if (!checkSendable()) {
+            setIsSubmitted(true);
+            return;
+        }
+
+        handleGet();
+
+
     }
+
+    async function handleGet() {
+        await axios.post(
+            "https://reqres.in/api/pizza",
+            formData,
+            {
+                headers: {
+                    "x-api-key": "reqres-free-v1"
+                }
+            }
+        )
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+            .finally(() => {
+                setPage("Success");
+            });
+
+    }
+
 
     function homePage() {
         setPage("home")
     }
 
-    useEffect(() => {
-        console.log(formData)
-    }, [formData]);
-
     const PageSwap = () => {
         switch (page) {
             case "home":
+                handleScroll();
                 return <>
-                    <Entry categories={categories}/>
-                    <Ads categories={categories}/>
+                    <Entry openForm={openForm} categories={categories}/>
+                    <Ads openForm={openForm} categories={categories}/>
                     <Footer/>
                 </>
             case "form":
-                return <OrderForm onChange={onChange} formData={formData} homePage={homePage} sendActive={sendActive}
-                                  increment={increment} decrement={decrement}/>
+                return (
+                    <>
+                        <OrderForm onChange={onChange} formData={formData} errors={errors} homePage={homePage}
+                                   increment={increment} decrement={decrement} onSubmit={handleSubmit}
+                                   isSubmitted={isSubmitted} checkSendable={checkSendable()}/>
+                        <Footer/>
+                    </>
+                )
+            case "Success":
+                handleScroll();
+                return (
+                    <>
+                        <Success ingredients={formData.ingredients} price={formData.price()}
+                                 pizzaSize={formData.pizzaSize} dough={formData.dough}/>
+                        <Footer/>
+                    </>
+                )
             default:
                 return 0;
         }
@@ -144,8 +213,6 @@ function App() {
     return (
         <>
             {PageSwap()}
-            {console.log(formData)}
-            <button onClick={() => Ttt()}>Form</button>
         </>
     )
 }

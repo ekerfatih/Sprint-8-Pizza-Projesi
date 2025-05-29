@@ -1,0 +1,78 @@
+﻿.area {
+    background-color: red;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+.middle-area {
+    margin-top: 50px;
+    width: 25%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.middle-area h2 {
+    margin: 50px 0;
+}
+
+.order-confirm {
+    margin: 50px 0;
+}
+
+.order-confirm span {
+    font-size: 1.5rem;
+}
+
+.order-confirm h1 {
+    font-size: 6rem;
+}
+
+.white {
+    color: white;
+}
+
+.pizza-summary {
+    text-align: left;
+    width: 50%;
+    line-height: 1.5rem;
+}
+
+.pizza-summary p {
+    margin: 10px 0;
+}
+
+.pizza-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.order-total {
+    padding: 50px;
+    border: 1px solid white;
+    margin: 60px 0;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: 10px;
+    width: 50%;
+}
+
+hr {
+    width: 100%;
+}
+
+.order-total p {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#order {
+    font-weight: 200;
+}

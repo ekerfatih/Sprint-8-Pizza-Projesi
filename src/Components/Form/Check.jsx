@@ -2,13 +2,13 @@
     return (
         <div className="checkbox">
             <input
+                className="checkboxInput"
                 type="checkbox"
                 name="ingredients"
                 id={ingredient}
                 value={ingredient}
                 checked={ingredients.includes(ingredient)}
                 onChange={onChange}
-                hidden
             />
             <label htmlFor={ingredient} className="checkLabel"/>
             <label htmlFor={ingredient}>{ingredient}</label>
