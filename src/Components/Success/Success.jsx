@@ -7,7 +7,9 @@ function Success({ingredients, price, pizzaSize, dough, orderTime, quantity}) {
         <>
             <div className="area barlow">
                 <div className="middle-area">
-                    <img src="images/iteration-1-images/logo.svg" alt=""/>
+                    <a href="/">
+                        <img src="images/iteration-1-images/logo.svg" alt=""/>
+                    </a>
 
                     <div className="order-confirm">
                         <span className="yellow-text-italic satisfy">lezzetin yolda</span>

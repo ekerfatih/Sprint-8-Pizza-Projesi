@@ -12,7 +12,6 @@
             />
             <label htmlFor={ingredient} className="checkLabel"/>
             <label htmlFor={ingredient}>{ingredient}</label>
-
         </div>
     );
 

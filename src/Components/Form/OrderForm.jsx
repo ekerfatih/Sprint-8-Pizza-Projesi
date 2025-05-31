@@ -64,9 +64,11 @@ function OrderForm({onChange, formData, errors, homePage, increment, decrement, 
                                             <input checked={pizzaSize === "Küçük Boy"} onChange={onChange}
                                                    value="Küçük Boy"
                                                    type="radio"
-                                                   name="pizzaSize" id="small"/>
+                                                   name="pizzaSize" id="small"
+
+                                            />
                                             <label className="lblRadio" htmlFor="small">S</label>
-                                            <label className="lblMobile" htmlFor="big">Küçük</label>
+                                            <label className="lblMobile" htmlFor="small">Küçük</label>
                                         </div>
                                         <div className="radioDiv">
                                             <input checked={pizzaSize === "Orta Boy"} onChange={onChange}
@@ -74,7 +76,7 @@ function OrderForm({onChange, formData, errors, homePage, increment, decrement, 
                                                    type="radio"
                                                    name="pizzaSize" id="mid"/>
                                             <label className="lblRadio" htmlFor="mid">M</label>
-                                            <label className="lblMobile" htmlFor="big">Orta</label>
+                                            <label className="lblMobile" htmlFor="mid">Orta</label>
                                         </div>
                                         <div className="radioDiv">
                                             <input checked={pizzaSize === "Büyük Boy"} onChange={onChange}
