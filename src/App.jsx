@@ -7,6 +7,7 @@ import {useEffect, useState} from "react";
 import OrderForm from "./Components/Form/OrderForm.jsx";
 import Success from "./Components/Success/Success.jsx";
 import axios from "axios";
+import {ToastContainer, toast} from 'react-toastify';
 
 
 const initialFormData = {
@@ -17,8 +18,8 @@ const initialFormData = {
     quantity: 1,
     price: function () {
         return this.quantity * 85.5 + this.ingredients.length * 5;
-    }
-
+    },
+    orderTime: ""
 }
 
 const initialErrors = {
@@ -29,6 +30,7 @@ const initialErrors = {
 
 function App() {
 
+    //Sayfanın başına dönmesi için
     const handleScroll = () => {
         const section = document.querySelector('body');
         section?.scrollIntoView({behavior: 'smooth'});
@@ -57,23 +59,14 @@ function App() {
         });
     }
 
-
-    const [page, setPage] = useState("form")
+    const [page, setPage] = useState("home")
     const [formData, setFormData] = useState(initialFormData);
     const [errors, setErrors] = useState(initialErrors);
     const [isSubmitted, setIsSubmitted] = useState(false)
 
-    useEffect(() => {
-        console.log(isSubmitted);
-    }, [isSubmitted]);
-
-
-    const [isLoading, setIsLoading] = useState(false);
-
-
+    //Errorları tespit etmek için boyut, hamur ve malzemeler değiştiğinde
     useEffect(() => {
         setErrors(prev => {
-
             const n = {
                 ...prev,
                 sizeEmpty: !formData.pizzaSize,
@@ -83,7 +76,6 @@ function App() {
             return n;
         });
     }, [formData.pizzaSize, formData.dough, formData.ingredients]);
-
     const checkSendable = () => {
         return Object.values(errors).every(x => x === false)
     }
@@ -136,20 +128,20 @@ function App() {
         setFormData(prev => ({...prev, [name]: val}));
     }
 
-
     function handleSubmit(e) {
         e.preventDefault();
         if (!checkSendable()) {
             setIsSubmitted(true);
             return;
         }
-
-        handleGet();
+        handleAxiosPostRequest();
 
 
     }
 
-    async function handleGet() {
+    async function handleAxiosPostRequest() {
+        const toastId = toast.loading("Sipariş işleniyor..."); // 🔄 İşleniyor mesajı
+
         await axios.post(
             "https://reqres.in/api/pizza",
             formData,
@@ -161,16 +153,47 @@ function App() {
         )
             .then(res => {
                 console.log(res.data);
+
+                const date = new Date(res.data.createdAt);
+
+                const options = {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false,
+                };
+                const formatted = date.toLocaleString('tr-TR', options);
+                setFormData({...formData, orderTime: formatted});
+                toast.update(toastId, {
+                    render: "Sipariş başarıyla gönderildi!",
+                    type: "success",
+                    isLoading: false,
+                    autoClose: 3000
+                });
+
+                setTimeout(() => {
+                    setPage("Success");
+                }, 1000);
+
+
             })
             .catch(err => {
                 console.log(err);
+                toast.update(toastId, {
+                    render: "Sipariş gönderilirken bir hata oluştu. Ana sayfaya yönlendileriz. Lütfen tekrar deneyiniz.",
+                    type: "error",
+                    isLoading: false,
+                    autoClose: 3000
+                });
+                setTimeout(() => {
+                    setPage("home");
+                }, 2000);
+                setFormData(initialFormData);
             })
-            .finally(() => {
-                setPage("Success");
-            });
 
     }
-
 
     function homePage() {
         setPage("home")
@@ -191,7 +214,6 @@ function App() {
                         <OrderForm onChange={onChange} formData={formData} errors={errors} homePage={homePage}
                                    increment={increment} decrement={decrement} onSubmit={handleSubmit}
                                    isSubmitted={isSubmitted} checkSendable={checkSendable()}/>
-                        <Footer/>
                     </>
                 )
             case "Success":
@@ -199,8 +221,7 @@ function App() {
                 return (
                     <>
                         <Success ingredients={formData.ingredients} price={formData.price()}
-                                 pizzaSize={formData.pizzaSize} dough={formData.dough}/>
-                        <Footer/>
+                                 pizzaSize={formData.pizzaSize} dough={formData.dough} orderTime={formData.orderTime} quantity={formData.quantity}/>
                     </>
                 )
             default:
@@ -213,8 +234,12 @@ function App() {
     return (
         <>
             {PageSwap()}
+            <ToastContainer/>
         </>
     )
 }
 
 export default App
+
+
+

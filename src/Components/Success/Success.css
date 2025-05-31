@@ -5,9 +5,13 @@
     justify-content: center;
 }
 
+#cong {
+    display: none;
+}
+
 .middle-area {
     margin-top: 50px;
-    width: 25%;
+    width: 30%;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -16,7 +20,7 @@
 }
 
 .middle-area h2 {
-    margin: 50px 0;
+    margin: 40px 0;
 }
 
 .order-confirm {
@@ -25,10 +29,6 @@
 
 .order-confirm span {
     font-size: 1.5rem;
-}
-
-.order-confirm h1 {
-    font-size: 6rem;
 }
 
 .white {
@@ -54,7 +54,7 @@
 .order-total {
     padding: 50px;
     border: 1px solid white;
-    margin: 60px 0;
+    margin: 20px 0;
     gap: 20px;
     display: flex;
     flex-direction: column;
@@ -75,4 +75,32 @@ hr {
 
 #order {
     font-weight: 200;
+    font-size: 4.5rem;
+}
+
+@media (max-width: 420px) {
+    .pizza-info {
+        display: none;
+    }
+
+    .order-total {
+        display: none;
+    }
+
+    hr {
+        display: none;
+    }
+
+
+    .order-confirm {
+        margin: 0;
+    }
+
+    .order-confirm h1 {
+        font-size: 4.5rem;
+    }
+
+    .middle-area img {
+        margin: 100% 0;
+    }
 }
