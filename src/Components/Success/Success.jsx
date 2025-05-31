@@ -30,7 +30,7 @@ function Success({ingredients, price, pizzaSize, dough, orderTime, quantity}) {
                     </div>
                     <div className="white order-total">
                         <h3>Sipariş Toplamı</h3>
-                        <p>Seçimler <span>{ingredients.length * 5}₺</span></p>
+                        <p>Seçimler <span>{quantity * ingredients.length * 5}₺</span></p>
                         <p>Toplam <span>{price}₺</span></p>
                     </div>
 

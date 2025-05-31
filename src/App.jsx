@@ -221,7 +221,8 @@ function App() {
                 return (
                     <>
                         <Success ingredients={formData.ingredients} price={formData.price()}
-                                 pizzaSize={formData.pizzaSize} dough={formData.dough} orderTime={formData.orderTime} quantity={formData.quantity}/>
+                                 pizzaSize={formData.pizzaSize} dough={formData.dough} orderTime={formData.orderTime}
+                                 quantity={formData.quantity}/>
                     </>
                 )
             default:

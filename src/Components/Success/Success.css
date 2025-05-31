@@ -24,7 +24,7 @@
 }
 
 .order-confirm {
-    margin: 50px 0;
+    margin: 50px 0 30px 0;
 }
 
 .order-confirm span {
@@ -78,7 +78,7 @@ hr {
     font-size: 4.5rem;
 }
 
-@media (max-width: 420px) {
+@media (max-width: 450px) {
     .pizza-info {
         display: none;
     }
@@ -98,9 +98,12 @@ hr {
 
     .order-confirm h1 {
         font-size: 4.5rem;
+        font-weight: 200;
     }
-
+    #cong {
+        display: block;
+    }
     .middle-area img {
-        margin: 100% 0;
+        margin: 30% 0;
     }
 }
