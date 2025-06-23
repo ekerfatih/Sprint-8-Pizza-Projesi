@@ -1,3 +1,5 @@
+Video Anlatım : https://www.loom.com/share/a52bebf924ad43e1b5455b77b999bf16
+
 # Sprint Challenge: _Teknolojik Yemekler - SPA_
 
 ## Proje Açıklaması
