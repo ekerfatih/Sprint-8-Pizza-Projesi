@@ -18,12 +18,12 @@ function OrderForm({onChange, formData, errors, homePage, increment, decrement, 
         <>
             <section className="orderFormSection barlow">
                 <div className="header">
-                    <img src="images/iteration-1-images/logo.svg" alt=""/>
+                    <img src="/images/iteration-1-images/logo.svg" alt=""/>
                 </div>
                 <div className="grayArea">
                     <div className="grayContent">
                         <div className="image">
-                            <img src="images/iteration-2-images/pictures/form-banner.png" alt=""/>
+                            <img src="/images/iteration-2-images/pictures/form-banner.png" alt=""/>
                         </div>
 
                         <div className="ugh">

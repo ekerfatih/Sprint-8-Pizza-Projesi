@@ -8,7 +8,7 @@ function Success({ingredients, price, pizzaSize, dough, orderTime, quantity}) {
             <div className="area barlow">
                 <div className="middle-area">
                     <a href="/">
-                        <img src="images/iteration-1-images/logo.svg" alt=""/>
+                        <img src="/images/iteration-1-images/logo.svg" alt=""/>
                     </a>
 
                     <div className="order-confirm">
