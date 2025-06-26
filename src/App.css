@@ -513,7 +513,7 @@ Bej: #FAF7F2 */
 
 
     .ads-wrapper {
-        display: flex;
+        display: flex !important;
         flex-direction: column;
         width: 80%;
         margin-top: 10%;
