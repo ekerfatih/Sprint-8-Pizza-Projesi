@@ -5,7 +5,7 @@ import Billboard from "./Billboard.jsx";
 function Ads({categories,openForm}) {
     return (
         <section className="ads-section">
-            <Billboard />
+            <Billboard openForm={openForm}/>
             <Selects categories={categories}/>
             <Products/>
         </section>
