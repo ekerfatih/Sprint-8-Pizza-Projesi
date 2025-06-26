@@ -1,7 +1,7 @@
 ﻿function FooterAddress() {
     return (
         <div className="address">
-            <img id="footer-img" src="/public/images/iteration-2-images/footer/logo-footer.svg" alt=""/>
+            <img id="footer-img" src="/images/iteration-2-images/footer/logo-footer.svg" alt=""/>
             <div id="address-content">
                 <div className="address-info">
                     <img src="../../../public/images/iteration-2-images/footer/icons/icon-1.png" alt=""/>
