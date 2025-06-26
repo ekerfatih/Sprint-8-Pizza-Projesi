@@ -104,7 +104,7 @@ body {
     text-align: center;
 }
 
-.ads-wrapper {
+#ads-wrapper {
     display: flex;
     margin: 5rem 0 1rem 0;
     gap: 1.2vw;
@@ -511,13 +511,6 @@ Bej: #FAF7F2 */
         font-size: 3vw;
     }
 
-
-    .ads-wrapper {
-        display: flex !important;
-        flex-direction: column;
-        width: 80%;
-        margin-top: 10%;
-    }
 
     #special-ad span {
         top: 55%;

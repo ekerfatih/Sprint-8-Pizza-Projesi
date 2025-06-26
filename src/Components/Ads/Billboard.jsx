@@ -1,6 +1,6 @@
 ﻿function Billboard({openForm}) {
     return (
-        <div className="ads-wrapper">
+        <div id="ads-wrapper">
             <div id="special-ad" className="pos">
                 <img src="/images/iteration-2-images/cta/kart-1.png" alt="" className="card"/>
                 <h1 className="qua">Özel<br/> Lezzetus</h1>
